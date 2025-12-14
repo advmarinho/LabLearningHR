@@ -1,11 +1,11 @@
 # LabLearningHR
 IGARAPÉ DIGITAL
-MITO ESTRATÉGICO – LABORATÓRIO DE FOLHA DE PAGAMENTO
+AGI ESTRATÉGICO – LABORATÓRIO DE FOLHA DE PAGAMENTO
 =================================================
 
 Visão Geral
 -----------
-O Mito Estratégico é um laboratório prático de aprendizagem criado pela Igarapé Digital
+O AGI Estratégico é um laboratório prático de aprendizagem criado pela Igarapé Digital
 para formação e aceleração de analistas de folha de pagamento.
 
 O foco não é conteúdo teórico isolado, mas sim a construção de competência operacional,
@@ -131,4 +131,4 @@ O contato com o projeto é feito via WhatsApp, com mensagem direta e objetiva,
 sem exposição de detalhes técnicos ao público.
 
 Igarapé Digital
-Laboratório Mito Estratégico – Folha de Pagamento
+Laboratório AGI Estratégico – Folha de Pagamento
