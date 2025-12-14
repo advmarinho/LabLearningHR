@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Igarapé Digital | AGI Estratégico (Laboratório de Folha)</title>
+  <meta name="description" content="Laboratório de aprendizagem para novos analistas de folha: operação, implantações, benefícios e estratégia." />
+
+  <style>
+    :root{
+      --bg: #f4f4f4;
+      --text: #333;
+      --muted: #555;
+
+      --blue-900: #003d66;
+      --blue-800: #004080;
+      --blue-700: #0056b3;
+
+      --white: #ffffff;
+      --shadow: 0 0 10px rgba(0,0,0,.10);
+      --shadow-soft: 0 0 5px rgba(0,0,0,.10);
+
+      --radius: 10px;
+      --radius-sm: 8px;
+
+      --warn-bg: #fff3cd;
+      --warn-bd: #ffeeba;
+      --warn-tx: #856404;
+
+      --ok-bg: #e6f4ea;
+      --ok-bd: #ccebd6;
+      --ok-tx: #1e6e3d;
+
+      --bad-bg: #fde7e9;
+      --bad-bd: #f7c8ce;
+      --bad-tx: #8a1f2b;
+    }
+
+    *{ box-sizing: border-box; }
+
+    body{
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    nav{
+      background-color: var(--blue-900);
+      color: var(--white);
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a{
+      color: var(--white);
+      margin: 0 14px;
+      text-decoration: none;
+      display: inline-block;
+      padding: 6px 2px;
+    }
+
+    nav a:hover{ text-decoration: underline; }
+
+    header.hero-section{
+      background-color: var(--blue-800);
+      color: var(--white);
+      text-align: center;
+      padding: 95px 18px 70px 18px;
+      margin-top: 50px;
+    }
+
+    header.hero-section .hero-wrap{
+      max-width: 1050px;
+      margin: 0 auto;
+    }
+
+    header.hero-section h1{
+      margin: 0 0 12px 0;
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    header.hero-section p{
+      margin: 0 auto 18px auto;
+      max-width: 860px;
+      line-height: 1.6;
+      opacity: .95;
+    }
+
+    .cta-row{
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .cta-button{
+      background-color: var(--blue-700);
+      color: var(--white);
+      padding: 10px 18px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      border: 0;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .cta-button:hover{ background-color: var(--blue-900); }
+
+    .cta-secondary{
+      background-color: transparent;
+      border: 1px solid rgba(255,255,255,.55);
+    }
+
+    .cta-secondary:hover{ background-color: rgba(255,255,255,.10); }
+
+    .container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 14px;
+    }
+
+    section{
+      padding: 56px 0;
+      text-align: center;
+    }
+
+    .card-section{
+      background-color: var(--white);
+      margin: 18px 0;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow);
+      padding: 30px 18px;
+      text-align: center;
+    }
+
+    h2{
+      color: var(--blue-800);
+      margin: 0 0 12px 0;
+      padding: 0;
+    }
+
+    .sub{
+      color: var(--muted);
+      margin: 0 auto 18px auto;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+
+    .grid-3{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 16px;
+      text-align: left;
+    }
+
+    .tile{
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-soft);
+      padding: 14px;
+      border: 1px solid #eee;
+    }
+
+    .tile h3{
+      margin: 0 0 8px 0;
+      color: var(--blue-800);
+      font-size: 16px;
+    }
+
+    .tile p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .pill-row{
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 14px;
+    }
+
+    .pill{
+      border: 1px solid #ddd;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .pill.active{
+      border-color: var(--blue-800);
+      color: var(--blue-800);
+      font-weight: bold;
+    }
+
+    .lab-top{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      align-items: start;
+      margin-top: 16px;
+      text-align: left;
+    }
+
+    .panel{
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-soft);
+      padding: 14px;
+    }
+
+    .panel h3{
+      margin: 0 0 10px 0;
+      color: var(--blue-800);
+      font-size: 16px;
+    }
+
+    .row{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .metric{
+      background: var(--bg);
+      border-radius: var(--radius-sm);
+      padding: 10px;
+      min-width: 220px;
+      border: 1px solid #eee;
+    }
+
+    .metric .k{
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .metric .v{
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--blue-800);
+    }
+
+    .progress-wrap{
+      width: 100%;
+      height: 10px;
+      background: #e9e9e9;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #e1e1e1;
+    }
+
+    .progress-bar{
+      height: 100%;
+      width: 0%;
+      background: var(--blue-800);
+    }
+
+    .input-row{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    input[type="text"], select, textarea{
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    textarea{
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .lab-list{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      text-align: left;
+    }
+
+    .mission{
+      background: #fff;
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #eee;
+      padding: 14px;
+    }
+
+    .mission .top{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .badge{
+      font-size: 12px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: var(--muted);
+    }
+
+    .badge.b-ok{ background: var(--ok-bg); border-color: var(--ok-bd); color: var(--ok-tx); }
+    .badge.b-warn{ background: var(--warn-bg); border-color: var(--warn-bd); color: var(--warn-tx); }
+    .badge.b-bad{ background: var(--bad-bg); border-color: var(--bad-bd); color: var(--bad-tx); }
+
+    .mission h4{
+      margin: 0 0 6px 0;
+      color: var(--blue-800);
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .mission p{
+      margin: 0 0 10px 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .checklist{
+      margin: 10px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist li{
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 8px 0;
+      border-top: 1px dashed #eee;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .checklist input{ margin-top: 3px; }
+
+    .actions{
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      align-items: center;
+    }
+
+    .two-col{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 12px;
+      text-align: left;
+    }
+
+    .kv{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .kv .line{
+      background: var(--bg);
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px;
+    }
+
+    .kv .line b{ color: var(--blue-800); }
+
+    .callout{
+      background: var(--bg);
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+    .callout b{ color: var(--blue-800); }
+
+    footer{
+      background-color: var(--blue-800);
+      color: var(--white);
+      text-align: center;
+      padding: 18px 0;
+      margin-top: 18px;
+    }
+
+    footer a{ color: var(--white); text-decoration: none; }
+    footer a:hover{ text-decoration: underline; }
+
+    @media (min-width: 820px){
+      .grid-3{ grid-template-columns: repeat(3, 1fr); }
+      .lab-top{ grid-template-columns: 1.15fr .85fr; }
+      .input-row{ grid-template-columns: 1.1fr .9fr; }
+      .lab-list{ grid-template-columns: repeat(2, 1fr); }
+      .two-col{ grid-template-columns: 1fr 1fr; }
+      .kv{ grid-template-columns: 1fr 1fr; }
+      header.hero-section h1{ font-size: 36px; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="#visao">Visão</a>
+    <a href="#trilhas">Trilhas</a>
+    <a href="#laboratorio">Laboratório</a>
+    <a href="#simulador">Simulador</a>
+    <a href="#indicadores">Indicadores</a>
+    <a href="#biblioteca">Playbooks</a>
+    <a href="#contato">Contato</a>
+  </nav>
+
+  <header class="hero-section" id="topo">
+    <div class="hero-wrap">
+      <h1>AGI Estratégico | Igarapé Digital</h1>
+      <p>
+        Um laboratório prático para formar analistas de folha capazes de executar com precisão, conduzir implantações,
+        operar benefícios com consistência e sustentar decisões com indicadores.
+      </p>
+      <div class="cta-row">
+        <a class="cta-button" href="#laboratorio">Entrar no Laboratório</a>
+        <a class="cta-button cta-secondary" href="#trilhas">Ver trilhas</a>
+      </div>
+      <p class="small" style="margin-top:14px; opacity:.92;">
+        Site estático para GitHub Pages. Progresso e evidências ficam salvos no navegador do usuário.
+      </p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section id="visao">
+      <div class="card-section">
+        <h2>Visão do Programa</h2>
+        <p class="sub">
+          O laboratório é pensado como rotina real: cada missão tem um cenário, critérios e evidência mínima.
+          O objetivo é reduzir erro, retrabalho e risco, aumentando previsibilidade e autonomia.
+        </p>
+
+        <div class="grid-3">
+          <div class="tile">
+            <h3>Operação</h3>
+            <p>Fechamento, admissões, férias, rescisões, variáveis e encargos. Checklist, evidência e padrão.</p>
+          </div>
+          <div class="tile">
+            <h3>Implantação</h3>
+            <p>Plano de testes, critérios de aceite, governança e transição sem quebrar a operação.</p>
+          </div>
+          <div class="tile">
+            <h3>Benefícios e Estratégia</h3>
+            <p>Elegibilidade, conciliação, relacionamento com operadora e indicadores para decisão.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="trilhas">
+      <div class="card-section">
+        <h2>Trilhas de Formação</h2>
+        <p class="sub">
+          Trilhas objetivas, com missões práticas. Cada missão vira um hábito operacional e um padrão de qualidade.
+        </p>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>Trilha 01: Fundamentos de Folha</h3>
+            <div class="kv">
+              <div class="line"><b>Objetivo</b><br/>Executar rotinas com checklist e conferência.</div>
+              <div class="line"><b>Entrega</b><br/>Checklist de fechamento e padrão de evidência.</div>
+              <div class="line"><b>Treinos</b><br/>Admissão, férias, rescisão, variáveis e encargos.</div>
+              <div class="line"><b>Qualidade</b><br/>Erros críticos zero; reduzir retrabalho mês a mês.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Trilha 02: Implantação e Governança</h3>
+            <div class="kv">
+              <div class="line"><b>Objetivo</b><br/>Planejar e executar mudança com rastreabilidade e teste.</div>
+              <div class="line"><b>Entrega</b><br/>Plano de testes, critérios de aceite e contingência.</div>
+              <div class="line"><b>Treinos</b><br/>Templates, migração de regras, UAT e go-live.</div>
+              <div class="line"><b>Qualidade</b><br/>Risco mapeado antes do incidente.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Trilha 03: Benefícios como Operação</h3>
+            <div class="kv">
+              <div class="line"><b>Objetivo</b><br/>Operar benefícios com elegibilidade, SLA e prevenção.</div>
+              <div class="line"><b>Entrega</b><br/>Mapa operacional por benefício (pontos de falha e controles).</div>
+              <div class="line"><b>Treinos</b><br/>Movimentação, conciliação, suporte e relação com operadora.</div>
+              <div class="line"><b>Qualidade</b><br/>Reduzir reincidência e tempo de resolução.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Trilha 04: Estratégia e Indicadores</h3>
+            <div class="kv">
+              <div class="line"><b>Objetivo</b><br/>Transformar rotina em KPI e KPI em decisão.</div>
+              <div class="line"><b>Entrega</b><br/>Painel mensal de qualidade, prazo, retrabalho e risco.</div>
+              <div class="line"><b>Treinos</b><br/>Causa raiz, priorização, comunicação executiva.</div>
+              <div class="line"><b>Qualidade</b><br/>Menos urgência, mais previsibilidade e prevenção.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="laboratorio">
+      <div class="card-section">
+        <h2>Laboratório</h2>
+        <p class="sub">
+          Missões com cenários reais. O analista resolve, registra evidência e aprende a agir com método.
+          Filtre por tema e nível e acompanhe o progresso.
+        </p>
+
+        <div class="lab-top">
+          <div class="panel">
+            <h3>Filtro e progresso</h3>
+            <div class="input-row">
+              <input id="q" type="text" placeholder="Buscar missão (ex.: provisão, retroativo, VT, rescisão, férias, operadora)" />
+              <select id="f">
+                <option value="todas">Todas as categorias</option>
+                <option value="folha">Folha</option>
+                <option value="implantacao">Implantação</option>
+                <option value="beneficios">Benefícios</option>
+                <option value="estrategia">Estratégia</option>
+              </select>
+            </div>
+
+            <div class="pill-row" style="justify-content:flex-start; margin-top:12px;">
+              <button class="pill active" data-diff="todas">Todas</button>
+              <button class="pill" data-diff="iniciante">Iniciante</button>
+              <button class="pill" data-diff="intermediario">Intermediário</button>
+              <button class="pill" data-diff="avancado">Avançado</button>
+            </div>
+
+            <div style="margin-top:12px;">
+              <div class="small" style="margin-bottom:6px;">Progresso total</div>
+              <div class="progress-wrap" aria-label="Barra de progresso total">
+                <div class="progress-bar" id="progressBar"></div>
+              </div>
+
+              <div class="row" style="margin-top:10px;">
+                <div class="metric">
+                  <div class="k">Missões concluídas</div>
+                  <div class="v" id="doneCount">0</div>
+                </div>
+                <div class="metric">
+                  <div class="k">Total de missões</div>
+                  <div class="v" id="totalCount">0</div>
+                </div>
+                <div class="metric">
+                  <div class="k">Concluído</div>
+                  <div class="v" id="pct">0%</div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="cta-button" id="exportBtn" type="button">Exportar progresso</button>
+                <button class="cta-button cta-secondary" id="importBtn" type="button">Importar progresso</button>
+                <button class="cta-button" id="resetBtn" type="button">Zerar progresso</button>
+              </div>
+
+              <div class="small">
+                Exportar/importar é útil para mentoria e auditoria do aprendizado (sem backend).
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Critérios de qualidade</h3>
+            <div class="kv">
+              <div class="line"><b>Precisão</b><br/>Conferência por amostra e por total, sem “achismo”.</div>
+              <div class="line"><b>Prazo</b><br/>Entrega no prazo com transparência de pendências.</div>
+              <div class="line"><b>Risco</b><br/>Identificação precoce + plano de contingência.</div>
+              <div class="line"><b>Retrabalho</b><br/>Causa raiz e redução de reincidência.</div>
+            </div>
+            <div class="small" style="margin-top:10px;">
+              Recomenda-se avaliar cada missão com nota 0 a 2 por critério.
+            </div>
+          </div>
+        </div>
+
+        <div class="lab-list" id="missionList" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="simulador">
+      <div class="card-section">
+        <h2>Simulador de Casos</h2>
+        <p class="sub">
+          Treino rápido: selecionar um caso, executar checklist e registrar evidência de decisão.
+        </p>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>Escolha um caso</h3>
+            <select id="caseSelect"></select>
+
+            <div style="margin-top:10px;">
+              <div class="small">Checklist sugerido</div>
+              <ul class="checklist" id="caseChecklist"></ul>
+            </div>
+
+            <div style="margin-top:10px;">
+              <div class="small">Registro de evidência</div>
+              <textarea id="caseNotes" placeholder="Registre o que foi conferido, o resultado e a decisão tomada."></textarea>
+              <div class="actions">
+                <button class="cta-button" id="saveCaseNotes" type="button">Salvar evidência</button>
+                <button class="cta-button cta-secondary" id="loadCaseNotes" type="button">Carregar evidência</button>
+                <button class="cta-button" id="clearCaseNotes" type="button">Limpar</button>
+              </div>
+              <div class="small" id="caseMsg" style="margin-top:8px;"></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Como usar no onboarding</h3>
+            <div class="kv">
+              <div class="line"><b>Semana 1</b><br/>Missões iniciais + 1 caso por dia no simulador.</div>
+              <div class="line"><b>Semana 2</b><br/>Missões intermediárias e repetição com tempo menor.</div>
+              <div class="line"><b>Semana 3 e 4</b><br/>Casos avançados + criação de missões pelo próprio analista.</div>
+              <div class="line"><b>Mentoria</b><br/>Avaliar evidência, ajustar foco e reduzir reincidência.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="indicadores">
+      <div class="card-section">
+        <h2>Indicadores do Programa</h2>
+        <p class="sub">
+          Treinamento bem feito vira previsibilidade. Esses KPIs ajudam a mostrar evolução e reduzir risco.
+        </p>
+
+        <div class="grid-3">
+          <div class="tile">
+            <h3>Taxa de retrabalho</h3>
+            <p>Correções pós-fechamento por tipo. Meta: queda contínua e rastreável.</p>
+          </div>
+          <div class="tile">
+            <h3>Tempo até autonomia</h3>
+            <p>Dias até executar rotinas ponta a ponta com evidência mínima e sem intervenção.</p>
+          </div>
+          <div class="tile">
+            <h3>Incidentes evitáveis</h3>
+            <p>Incidentes por risco não mapeado. Meta: reduzir com controles preventivos.</p>
+          </div>
+          <div class="tile">
+            <h3>SLA de benefícios</h3>
+            <p>Tempo de resolução e reincidência. Meta: resolver e evitar repetir.</p>
+          </div>
+          <div class="tile">
+            <h3>Qualidade da evidência</h3>
+            <p>Decisão explicável e auditável: o que foi visto, por quem e por quê.</p>
+          </div>
+          <div class="tile">
+            <h3>Conformidade operacional</h3>
+            <p>Percentual de missões concluídas dentro do padrão definido para o programa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="biblioteca">
+      <div class="card-section">
+        <h2>Playbooks</h2>
+        <p class="sub">
+          Materiais do programa: checklists, instruções de trabalho, templates, guias de contingência
+          e mapas operacionais. Tudo com versão, data e responsável.
+        </p>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>Playbooks essenciais</h3>
+            <ul style="text-align:left; margin:0; padding-left:16px; color:var(--muted); line-height:1.6;">
+              <li>Fechamento mensal: passos, pontos de controle e evidência mínima</li>
+              <li>Admissão: dados críticos, integrações e validações</li>
+              <li>Férias: regras, prazos, exceções e conferência</li>
+              <li>Rescisão: cálculo, prazos, documentos e controles</li>
+              <li>Variáveis e provisões: reflexos e atualização de provisões</li>
+              <li>Encargos e retroativos: diferenças e rastreabilidade</li>
+              <li>Benefícios: elegibilidade, movimentação, conciliação e relação com operadora</li>
+            </ul>
+            <p class="small" style="margin-top:10px;">
+              Padrão de ouro: cada playbook tem “detecção precoce” e “plano de contingência”.
+            </p>
+          </div>
+
+          <div class="panel">
+            <h3>Governança do material</h3>
+            <div class="kv">
+              <div class="line"><b>Versão</b><br/>Toda atualização precisa de histórico e motivo.</div>
+              <div class="line"><b>Critério</b><br/>O material define evidência mínima por processo.</div>
+              <div class="line"><b>Responsável</b><br/>Um dono por playbook para revisão periódica.</div>
+              <div class="line"><b>Uso</b><br/>Cada missão referencia um playbook e um padrão de evidência.</div>
+            </div>
+          </div>
+        </div>
+
+        <!--
+          Nota interna (não exibir ao cliente):
+          Estrutura sugerida (GitHub):
+          /
+            index.html
+          /docs
+            playbooks, ITs, checklists
+          /templates
+            CSV, modelos, formulários
+          /assets
+            logo, imagens, arquivos estáticos
+        -->
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="card-section">
+        <h2>Contato</h2>
+        <p class="sub">
+          Canal direto para tirar dúvidas, solicitar apresentação do programa ou discutir implantação do laboratório.
+        </p>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3>Mensagem rápida</h3>
+            <div class="input-row">
+              <input id="wName" type="text" placeholder="Seu nome" />
+              <input id="wEmail" type="text" placeholder="Seu e-mail (opcional)" />
+            </div>
+            <textarea id="wMsg" placeholder="Escreva sua mensagem (ex.: quero conhecer o laboratório para onboarding de analistas de folha)."></textarea>
+
+            <div class="actions">
+              <button class="cta-button" id="whatsBtn" type="button">Enviar no WhatsApp</button>
+              <button class="cta-button cta-secondary" id="copyBtn" type="button">Copiar mensagem</button>
+            </div>
+
+            <div class="small" id="wStatus" style="margin-top:8px;"></div>
+            <div class="small" style="margin-top:8px;">
+              A mensagem abre no WhatsApp com texto preenchido. Sem exposição de detalhes técnicos.
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>O que você pode solicitar</h3>
+            <div class="kv">
+              <div class="line"><b>Onboarding</b><br/>Formação prática de analistas com trilhas e missões.</div>
+              <div class="line"><b>Implantação</b><br/>Plano de testes, governança e transição operacional.</div>
+              <div class="line"><b>Benefícios</b><br/>Controles, conciliação e prevenção de reincidência.</div>
+              <div class="line"><b>Indicadores</b><br/>KPIs de qualidade, prazo, retrabalho e risco.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="padding:8px 0;">
+        Igarapé Digital | AGI Estratégico (Laboratório de Folha) | Publicação via GitHub Pages
+      </div>
+      <div style="opacity:.95; font-size:13px;">
+        <a href="#topo">Voltar ao topo</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      "use strict";
+
+      const STORAGE_KEY = "igarape_AGI_progresso_v2";
+      const STORAGE_CASE_NOTES = "igarape_AGI_case_notes_v2";
+
+      // Ajuste aqui para seu WhatsApp no formato: 55 + DDD + número (somente dígitos)
+      // Ex.: São Paulo: 5511999999999
+      const WHATSAPP_NUMBER = "5511937158242";
+
+      const missions = [
+        {
+          id: "m1",
+          categoria: "folha",
+          dificuldade: "iniciante",
+          titulo: "Fechamento: checklist mínimo e evidência",
+          tags: ["fechamento", "conferência", "evidência"],
+          resumo: "Executar fechamento como processo repetível: passos, validações e evidência mínima.",
+          criterios: "Precisão e evidência",
+          cenario: "Competência 11/2025 com rotinas regulares, um lote de variáveis e pendências de integração.",
+          tarefa: [
+            "Montar sequência de fechamento e pontos de controle.",
+            "Definir evidência mínima para aprovar o fechamento."
+          ],
+          entregaveis: [
+            "Checklist preenchido",
+            "Lista de pendências com responsável e prazo",
+            "Resumo de riscos do mês"
+          ],
+          checklist: [
+            "Consolidar agenda do mês (prazos, pagamentos e exceções) e registrar riscos",
+            "Validar bases: admissões, alterações, afastamentos e integrações pendentes",
+            "Conferir verbas críticas por amostra e por totalizador (quando aplicável)",
+            "Registrar evidência do que foi validado (relatórios, logs ou prints)",
+            "Listar pendências com responsável e prazo (sem ocultar problema)"
+          ]
+        },
+
+        {
+          id: "m2",
+          categoria: "folha",
+          dificuldade: "iniciante",
+          titulo: "Admissão: dados críticos e prevenção de erro",
+          tags: ["admissão", "cadastro", "integração"],
+          resumo: "Tratar admissão como qualidade de dados: o erro na origem vira retrabalho na folha e benefícios.",
+          criterios: "Qualidade de dados",
+          cenario: "Entradas com data de corte de benefícios e integração com fornecedor.",
+          tarefa: [
+            "Definir dados críticos que não podem falhar.",
+            "Criar padrão de validação antes de liberar admissão."
+          ],
+          entregaveis: ["Checklist de admissão", "Registro de validações e pendências"],
+          checklist: [
+            "Validar dados pessoais e contratuais essenciais",
+            "Checar dependentes e impactos quando aplicável",
+            "Confirmar estrutura organizacional e integrações",
+            "Simular impacto na folha (proporcional, descontos e benefícios)",
+            "Registrar evidência e checklist de liberação"
+          ]
+        },
+
+        {
+          id: "m3",
+          categoria: "folha",
+          dificuldade: "intermediario",
+          titulo: "Rescisão: prazo, cálculo e controles",
+          tags: ["rescisão", "prazos", "documentos"],
+          resumo: "Tratar rescisão como tarefa de alto risco: prazo, cálculo, documentos e consistência.",
+          criterios: "Risco e conformidade",
+          cenario: "Rescisão com férias proporcionais, descontos e necessidade de dossiê completo.",
+          tarefa: [
+            "Definir controles para evitar erro em verbas e descontos.",
+            "Montar dossiê de evidência de cálculo e aprovações."
+          ],
+          entregaveis: ["Dossiê de rescisão", "Checklist de prazo e documentos", "Registro de conferência"],
+          checklist: [
+            "Mapear tipo de desligamento e prazos internos/legais",
+            "Revisar férias vencidas/proporcionais e reflexos",
+            "Checar descontos, adiantamentos e devoluções",
+            "Validar encargos e impactos em obrigações",
+            "Montar dossiê com evidência (cálculo, documentos e aprovações)"
+          ]
+        },
+
+        {
+          id: "m4",
+          categoria: "implantacao",
+          dificuldade: "intermediario",
+          titulo: "Implantação: plano de testes e critérios de aceite",
+          tags: ["implantação", "UAT", "teste", "governança"],
+          resumo: "Executar mudança com método: teste, evidência e critérios claros antes do go-live.",
+          criterios: "Governança e teste",
+          cenario: "Mudança de regra/integração em prazo curto, sem comprometer fechamento.",
+          tarefa: [
+            "Criar plano de testes com casos críticos e evidência.",
+            "Definir critérios de aceite e contingência."
+          ],
+          entregaveis: ["Plano de testes", "Critérios de aceite", "Plano de contingência"],
+          checklist: [
+            "Definir escopo, fora de escopo e stakeholders",
+            "Criar plano de testes (casos, massa, esperado, evidência)",
+            "Definir critérios de aceite (o que é 'passou')",
+            "Rodar testes com registro de evidência e bugs",
+            "Planejar transição (runbook + contingência)"
+          ]
+        },
+
+        {
+          id: "m5",
+          categoria: "beneficios",
+          dificuldade: "iniciante",
+          titulo: "Benefícios: elegibilidade e movimentação sem falha",
+          tags: ["benefícios", "elegibilidade", "movimentação"],
+          resumo: "Operar benefícios como rotina: elegibilidade, data de corte, movimentações e prevenção de reincidência.",
+          criterios: "SLA e reincidência",
+          cenario: "Colaboradores elegíveis sem liberação no fornecedor após movimentação.",
+          tarefa: [
+            "Definir conferência simples: elegíveis x cadastrados.",
+            "Padronizar resposta e evidência para tratativa."
+          ],
+          entregaveis: ["Lista de elegíveis x cadastrados", "Registro de causa raiz", "Plano de prevenção"],
+          checklist: [
+            "Mapear regras de elegibilidade e datas de corte",
+            "Desenhar fluxo de movimentação (entrada, alteração, cancelamento)",
+            "Criar conferência: elegíveis x cadastrados",
+            "Definir canal e padrão de resposta ao colaborador",
+            "Registrar causa raiz e prevenir reincidência"
+          ]
+        },
+
+        {
+          id: "m6",
+          categoria: "beneficios",
+          dificuldade: "intermediario",
+          titulo: "VT não liberado: diagnóstico e ação com operadora",
+          tags: ["VT", "transporte", "operadora", "movimentação"],
+          resumo: "Caso real: colaborador sem VT. Resolver com método, evidência e prevenção para não reincidir.",
+          criterios: "SLA e prevenção",
+          cenario: "Competência atual: colaborador relata não pagamento/carga de VT. Existe risco de impacto operacional e reclamação recorrente.",
+          tarefa: [
+            "Investigar a causa provável (elegibilidade, cadastro, data de corte, integração, status no fornecedor).",
+            "Definir ação com operadora e registro interno de evidência."
+          ],
+          entregaveis: ["Diagnóstico (causa raiz)", "Plano de ação com operadora", "Controle preventivo para próximos meses"],
+          checklist: [
+            "Confirmar elegibilidade (política, local de trabalho, modalidade e data de corte)",
+            "Validar cadastro interno (matrícula/CPF/centro, endereço e rota quando aplicável)",
+            "Checar status no fornecedor (pedido, bloqueio, pendência, rejeição)",
+            "Abrir tratativa com operadora com evidência e prazo de retorno",
+            "Criar controle preventivo: elegíveis x pedidos x cargas (mensal)"
+          ]
+        },
+
+        {
+          id: "m7",
+          categoria: "folha",
+          dificuldade: "intermediario",
+          titulo: "Variáveis e provisões: aumento de provisão por pagamento no mês",
+          tags: ["variáveis", "provisão", "férias", "13", "reflexos"],
+          resumo: "Caso real: pagamento de variáveis no mês exige revisão de provisões e reflexos. Resolver e deixar evidência.",
+          criterios: "Precisão e rastreabilidade",
+          cenario: "No mês 11/2025 foi pago variável (comissão/bonus) para parte do time. Você precisa avaliar impacto em provisões (ex.: férias + 1/3, 13º, encargos conforme política interna).",
+          tarefa: [
+            "Definir quais provisões sofrem impacto (e por quê).",
+            "Montar roteiro de conferência e evidência para aprovar a atualização."
+          ],
+          entregaveis: ["Memória de cálculo (nível macro)", "Evidência de conferência", "Registro do ajuste e motivo"],
+          checklist: [
+            "Identificar quais variáveis entram em base de provisão (conforme regra interna)",
+            "Mapear o impacto em provisões (férias + 1/3, 13º e outros aplicáveis)",
+            "Conferir por amostra colaboradores com variável (antes/depois)",
+            "Validar totalizadores (diferença do mês) e coerência com massa",
+            "Registrar evidência e aprovações do ajuste"
+          ]
+        },
+
+        {
+          id: "m8",
+          categoria: "folha",
+          dificuldade: "avancado",
+          titulo: "Retroativos e atrasos: geração de encargos e rastreabilidade",
+          tags: ["retroativo", "atraso", "encargos", "INSS", "FGTS", "IRRF"],
+          resumo: "Caso real: pagamentos retroativos/atrasos geram diferenças de encargos. Resolver com rastreabilidade e evidência.",
+          criterios: "Risco e conformidade",
+          cenario: "Foram pagos valores retroativos de competências anteriores na folha atual. É necessário tratar encargos e conferir se o processo está coerente com regras e obrigações.",
+          tarefa: [
+            "Criar checklist de validação de encargos para retroativos.",
+            "Definir evidência mínima e como registrar decisão."
+          ],
+          entregaveis: ["Checklist de retroativos", "Evidência por amostra", "Resumo de impacto em encargos"],
+          checklist: [
+            "Confirmar origem do retroativo (competência, evento e motivo)",
+            "Checar tratamento de bases e incidências (INSS/FGTS/IRRF conforme aplicável)",
+            "Validar por amostra: 3 a 5 colaboradores com cálculo conferido",
+            "Validar totalizadores: diferenças do mês coerentes com massa",
+            "Registrar evidência e orientar prevenção (evitar recorrência)"
+          ]
+        },
+
+        {
+          id: "m9",
+          categoria: "folha",
+          dificuldade: "intermediario",
+          titulo: "Férias: conferência, exceções e impactos em rescisão",
+          tags: ["férias", "proporcional", "desconto", "exceção"],
+          resumo: "Caso real: férias lançadas com exceções e risco de desconto incorreto em rescisão.",
+          criterios: "Precisão e prevenção",
+          cenario: "Há férias lançadas e uma parte do grupo entrou em desligamento, com risco de desconto/ajuste indevido.",
+          tarefa: [
+            "Definir validações obrigatórias antes do pagamento.",
+            "Criar controle para rescisões com férias já pagas."
+          ],
+          entregaveis: ["Checklist de férias", "Controle de rescisão x férias", "Evidência de conferência"],
+          checklist: [
+            "Conferir datas, período aquisitivo e saldo de dias",
+            "Validar médias e reflexos quando aplicável",
+            "Checar impacto em descontos em rescisão (se ocorrer)",
+            "Conferir pagamento e encargos relacionados",
+            "Registrar evidência e pendências"
+          ]
+        },
+
+        {
+          id: "m10",
+          categoria: "beneficios",
+          dificuldade: "avancado",
+          titulo: "Operadora: plano não liberado/alteração urgente e tratativa",
+          tags: ["operadora", "plano", "urgência", "tratativa", "cadastro"],
+          resumo: "Caso real: demanda urgente com operadora (alteração/liberação). Resolver com método, evidência e prevenção.",
+          criterios: "SLA e gestão de risco",
+          cenario: "Há uma demanda urgente de liberação/alteração de plano com risco humano e reputacional. É necessário agir rápido, mas com evidência e governança.",
+          tarefa: [
+            "Criar roteiro de tratativa (interno e com operadora).",
+            "Padronizar evidência mínima e comunicação."
+          ],
+          entregaveis: ["Roteiro de tratativa", "Registro de evidência", "Plano preventivo (evitar reincidência)"],
+          checklist: [
+            "Validar elegibilidade e dados cadastrais completos (sem inconsistência)",
+            "Checar janela/regra de movimentação e exceção aplicável (se houver)",
+            "Abrir tratativa com operadora com evidência e prazo de retorno",
+            "Comunicar status ao solicitante com texto padrão e rastreabilidade",
+            "Registrar causa raiz e criar controle preventivo"
+          ]
+        },
+
+        {
+          id: "m11",
+          categoria: "estrategia",
+          dificuldade: "intermediario",
+          titulo: "Indicadores: transformar rotina em KPI acionável",
+          tags: ["KPI", "produtividade", "qualidade", "SLA"],
+          resumo: "Montar KPIs simples e acionáveis: retrabalho, prazo, incidentes e SLA de benefícios.",
+          criterios: "Ação e clareza",
+          cenario: "Operação com urgências recorrentes e baixa previsibilidade. Precisa medir para agir.",
+          tarefa: [
+            "Selecionar 3 KPIs e definir cálculo e fonte.",
+            "Definir gatilhos de ação e plano de rotina."
+          ],
+          entregaveis: ["Definição de KPIs", "Regras de ação", "Resumo executivo"],
+          checklist: [
+            "Escolher 3 KPIs relevantes (retrabalho, prazo, incidentes)",
+            "Definir fórmula simples e fonte de dados",
+            "Criar meta realista e frequência de acompanhamento",
+            "Definir gatilhos de ação (quando agir e como)",
+            "Preparar narrativa executiva (o que mudou e por quê)"
+          ]
+        }
+      ];
+
+      const cases = [
+        {
+          id: "c1",
+          nome: "Caso: variáveis no mês e aumento de provisão",
+          checklist: [
+            "Confirmar quais verbas variáveis entram em base de provisão",
+            "Calcular impacto do mês em provisões (macro) e conferir por amostra",
+            "Conferir totalizadores e coerência com massa",
+            "Registrar evidência e aprovações do ajuste",
+            "Criar controle preventivo para próximos meses"
+          ]
+        },
+        {
+          id: "c2",
+          nome: "Caso: retroativo/atraso gerando diferenças de encargos",
+          checklist: [
+            "Identificar competência de origem e motivo do retroativo",
+            "Checar incidências e bases (INSS/FGTS/IRRF quando aplicável)",
+            "Validar por amostra e por totalizador",
+            "Registrar evidência e decisão",
+            "Definir prevenção para reduzir reincidência"
+          ]
+        },
+        {
+          id: "c3",
+          nome: "Caso: VT não liberado e tratativa com operadora",
+          checklist: [
+            "Confirmar elegibilidade e dados cadastrais do colaborador",
+            "Checar data de corte e status de solicitação/carga",
+            "Acionar operadora com evidência e prazo",
+            "Comunicar retorno com texto padrão e rastreabilidade",
+            "Criar controle mensal elegíveis x cargas"
+          ]
+        },
+        {
+          id: "c4",
+          nome: "Caso: rescisão com risco de desconto/ajuste incorreto",
+          checklist: [
+            "Mapear tipo de desligamento e prazos",
+            "Revisar férias (pagas e a pagar) e reflexos",
+            "Checar descontos e devoluções",
+            "Montar dossiê de evidência",
+            "Registrar causa raiz se houver retrabalho"
+          ]
+        },
+        {
+          id: "c5",
+          nome: "Caso: operadora e liberação/alteração urgente",
+          checklist: [
+            "Validar dados cadastrais completos e elegibilidade",
+            "Checar janela de movimentação e exceções",
+            "Acionar operadora com evidência e prioridade",
+            "Registrar comunicação e status",
+            "Criar controle preventivo para evitar recorrência"
+          ]
+        }
+      ];
+
+      const $ = (sel) => document.querySelector(sel);
+      const $$ = (sel) => Array.from(document.querySelectorAll(sel));
+
+      const state = {
+        diff: "todas",
+        filtro: "todas",
+        query: "",
+        progresso: loadProgress()
+      };
+
+      function loadProgress(){
+        try{
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if(!raw) return {};
+          const obj = JSON.parse(raw);
+          if(!obj || typeof obj !== "object") return {};
+          return obj;
+        }catch(e){
+          return {};
+        }
+      }
+
+      function saveProgress(){
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state.progresso));
+      }
+
+      function isChecklistItemDone(missionId, idx){
+        const m = state.progresso[missionId];
+        if(!m || !Array.isArray(m.items)) return false;
+        return Boolean(m.items[idx]);
+      }
+
+      function setChecklistItemDone(missionId, idx, done){
+        if(!state.progresso[missionId]) state.progresso[missionId] = { items: [] };
+        if(!Array.isArray(state.progresso[missionId].items)) state.progresso[missionId].items = [];
+        state.progresso[missionId].items[idx] = Boolean(done);
+        saveProgress();
+      }
+
+      function isMissionDone(missionId){
+        const mission = missions.find(x => x.id === missionId);
+        if(!mission) return false;
+        return mission.checklist.every((_, idx) => isChecklistItemDone(missionId, idx));
+      }
+
+      function missionBadge(m){
+        const done = isMissionDone(m.id);
+        if(done) return { text: "Concluída", cls: "badge b-ok" };
+
+        const items = state.progresso[m.id] && Array.isArray(state.progresso[m.id].items) ? state.progresso[m.id].items : [];
+        const partial = items.some(Boolean);
+        if(partial) return { text: "Em andamento", cls: "badge b-warn" };
+
+        return { text: "Não iniciada", cls: "badge b-bad" };
+      }
+
+      function matchesFilters(m){
+        if(state.filtro !== "todas" && m.categoria !== state.filtro) return false;
+        if(state.diff !== "todas" && m.dificuldade !== state.diff) return false;
+
+        const q = state.query.trim().toLowerCase();
+        if(!q) return true;
+
+        const hay = [
+          m.titulo,
+          m.categoria,
+          m.dificuldade,
+          m.resumo,
+          m.criterios,
+          m.cenario || "",
+          (m.tags || []).join(" ")
+        ].join(" ").toLowerCase();
+
+        return hay.includes(q);
+      }
+
+      function renderMissions(){
+        const list = $("#missionList");
+        list.innerHTML = "";
+
+        const filtered = missions.filter(matchesFilters);
+
+        if(filtered.length === 0){
+          const d = document.createElement("div");
+          d.className = "panel";
+          d.innerHTML = "<h3>Nenhuma missão encontrada</h3><p class='small'>Ajuste busca/filtros e tente novamente.</p>";
+          list.appendChild(d);
+          updateProgressUI();
+          return;
+        }
+
+        for(const m of filtered){
+          const badge = missionBadge(m);
+
+          const wrap = document.createElement("div");
+          wrap.className = "mission";
+
+          wrap.innerHTML = `
+            <div class="top">
+              <div>
+                <span class="badge">${labelCategoria(m.categoria)} | ${labelDificuldade(m.dificuldade)}</span>
+                <span class="${badge.cls}" style="margin-left:8px;">${badge.text}</span>
+              </div>
+              <button class="cta-button cta-secondary" type="button" data-open="${m.id}">Abrir</button>
+            </div>
+            <h4>${escapeHtml(m.titulo)}</h4>
+            <p>${escapeHtml(m.resumo)}</p>
+            <div class="small"><b>Critério principal:</b> ${escapeHtml(m.criterios)}<br/><b>Tags:</b> ${escapeHtml((m.tags||[]).join(", "))}</div>
+            <div class="details" id="d_${m.id}" style="display:none; margin-top:10px;"></div>
+          `;
+
+          list.appendChild(wrap);
+        }
+
+        $$("button[data-open]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.getAttribute("data-open");
+            const el = $("#d_" + id);
+            const isOpen = el.style.display !== "none";
+            el.style.display = isOpen ? "none" : "block";
+            btn.textContent = isOpen ? "Abrir" : "Fechar";
+            if(!isOpen) renderMissionDetails(id, el);
+          });
+        });
+
+        updateProgressUI();
+      }
+
+      function renderMissionDetails(id, container){
+        const m = missions.find(x => x.id === id);
+        if(!m) return;
+
+        const head = document.createElement("div");
+        head.className = "callout";
+        head.innerHTML = `
+          <div><b>Cenário</b><br/>${escapeHtml(m.cenario || "—")}</div>
+          ${renderOptionalList("Tarefa", m.tarefa)}
+          ${renderOptionalList("Entregáveis", m.entregaveis)}
+        `;
+
+        const ul = document.createElement("ul");
+        ul.className = "checklist";
+
+        m.checklist.forEach((item, idx) => {
+          const li = document.createElement("li");
+          const checked = isChecklistItemDone(id, idx);
+
+          li.innerHTML = `
+            <input type="checkbox" ${checked ? "checked" : ""} data-mid="${id}" data-idx="${idx}" aria-label="Concluir item" />
+            <div>
+              <div>${escapeHtml(item)}</div>
+              <div class="small">Evidência mínima: registre o que foi conferido e o resultado.</div>
+            </div>
+          `;
+          ul.appendChild(li);
+        });
+
+        const done = isMissionDone(id);
+        const footer = document.createElement("div");
+        footer.className = "actions";
+        footer.style.marginTop = "10px";
+        footer.innerHTML = `
+          <button class="cta-button" type="button" data-mark="${id}">Marcar tudo</button>
+          <button class="cta-button cta-secondary" type="button" data-unmark="${id}">Desmarcar tudo</button>
+          <span class="${done ? "badge b-ok" : "badge b-warn"}">${done ? "Missão finalizada" : "Missão em andamento"}</span>
+        `;
+
+        container.innerHTML = "";
+        container.appendChild(head);
+        container.appendChild(ul);
+        container.appendChild(footer);
+
+        container.querySelectorAll("input[type='checkbox']").forEach(chk => {
+          chk.addEventListener("change", () => {
+            const mid = chk.getAttribute("data-mid");
+            const idx = Number(chk.getAttribute("data-idx"));
+            setChecklistItemDone(mid, idx, chk.checked);
+            renderMissions();
+          });
+        });
+
+        container.querySelectorAll("button[data-mark]").forEach(b => {
+          b.addEventListener("click", () => {
+            m.checklist.forEach((_, idx) => setChecklistItemDone(id, idx, true));
+            renderMissions();
+          });
+        });
+
+        container.querySelectorAll("button[data-unmark]").forEach(b => {
+          b.addEventListener("click", () => {
+            m.checklist.forEach((_, idx) => setChecklistItemDone(id, idx, false));
+            renderMissions();
+          });
+        });
+      }
+
+      function renderOptionalList(title, arr){
+        if(!arr || !Array.isArray(arr) || arr.length === 0) return "";
+        const lis = arr.map(x => "<li>" + escapeHtml(x) + "</li>").join("");
+        return `<div style="margin-top:10px;"><b>${escapeHtml(title)}</b><ul style="margin:6px 0 0 18px; padding:0; color:var(--muted); line-height:1.6;">${lis}</ul></div>`;
+      }
+
+      function updateProgressUI(){
+        const total = missions.length;
+        const done = missions.filter(m => isMissionDone(m.id)).length;
+
+        $("#totalCount").textContent = String(total);
+        $("#doneCount").textContent = String(done);
+
+        const pct = total === 0 ? 0 : Math.round((done / total) * 100);
+        $("#pct").textContent = pct + "%";
+        $("#progressBar").style.width = pct + "%";
+      }
+
+      function labelCategoria(c){
+        switch(c){
+          case "folha": return "Folha";
+          case "implantacao": return "Implantação";
+          case "beneficios": return "Benefícios";
+          case "estrategia": return "Estratégia";
+          default: return "Outros";
+        }
+      }
+
+      function labelDificuldade(d){
+        switch(d){
+          case "iniciante": return "Iniciante";
+          case "intermediario": return "Intermediário";
+          case "avancado": return "Avançado";
+          default: return "Nível";
+        }
+      }
+
+      function escapeHtml(s){
+        return String(s)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function setupPills(){
+        $$("button.pill").forEach(p => {
+          p.addEventListener("click", () => {
+            $$("button.pill").forEach(x => x.classList.remove("active"));
+            p.classList.add("active");
+            state.diff = p.getAttribute("data-diff");
+            renderMissions();
+          });
+        });
+      }
+
+      function setupFilters(){
+        $("#q").addEventListener("input", (e) => {
+          state.query = e.target.value || "";
+          renderMissions();
+        });
+
+        $("#f").addEventListener("change", (e) => {
+          state.filtro = e.target.value;
+          renderMissions();
+        });
+      }
+
+      function setupExportImport(){
+        $("#exportBtn").addEventListener("click", () => {
+          const payload = {
+            version: 2,
+            exportedAt: new Date().toISOString(),
+            progresso: state.progresso
+          };
+
+          const txt = JSON.stringify(payload, null, 2);
+          const blob = new Blob([txt], { type: "application/json" });
+          const url = URL.createObjectURL(blob);
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "igarape_AGI_progresso.json";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+
+          URL.revokeObjectURL(url);
+        });
+
+        $("#importBtn").addEventListener("click", () => {
+          const inp = document.createElement("input");
+          inp.type = "file";
+          inp.accept = "application/json";
+          inp.addEventListener("change", async () => {
+            const file = inp.files && inp.files[0];
+            if(!file) return;
+            const txt = await file.text();
+            try{
+              const obj = JSON.parse(txt);
+              if(!obj || typeof obj !== "object" || !obj.progresso) throw new Error("Arquivo inválido");
+              state.progresso = obj.progresso;
+              saveProgress();
+              renderMissions();
+              alert("Progresso importado com sucesso.");
+            }catch(e){
+              alert("Falha ao importar. Verifique se o arquivo é um JSON de exportação do laboratório.");
+            }
+          });
+          inp.click();
+        });
+
+        $("#resetBtn").addEventListener("click", () => {
+          const ok = confirm("Confirma zerar o progresso? Isso apaga marcações deste navegador.");
+          if(!ok) return;
+          state.progresso = {};
+          saveProgress();
+          renderMissions();
+        });
+      }
+
+      function setupCases(){
+        const sel = $("#caseSelect");
+        sel.innerHTML = "";
+        for(const c of cases){
+          const op = document.createElement("option");
+          op.value = c.id;
+          op.textContent = c.nome;
+          sel.appendChild(op);
+        }
+
+        sel.addEventListener("change", () => renderCase(sel.value));
+        renderCase(sel.value || cases[0].id);
+
+        $("#saveCaseNotes").addEventListener("click", () => {
+          const caseId = $("#caseSelect").value;
+          const notes = $("#caseNotes").value || "";
+          const all = loadCaseNotesAll();
+          all[caseId] = { savedAt: new Date().toISOString(), notes: notes };
+          localStorage.setItem(STORAGE_CASE_NOTES, JSON.stringify(all));
+          setCaseMsg("Evidência salva para este caso.", "ok");
+        });
+
+        $("#loadCaseNotes").addEventListener("click", () => {
+          const caseId = $("#caseSelect").value;
+          const all = loadCaseNotesAll();
+          const obj = all[caseId];
+          $("#caseNotes").value = obj && obj.notes ? obj.notes : "";
+          setCaseMsg(obj ? ("Evidência carregada. Salvo em: " + obj.savedAt) : "Nenhuma evidência salva para este caso.", obj ? "ok" : "warn");
+        });
+
+        $("#clearCaseNotes").addEventListener("click", () => {
+          $("#caseNotes").value = "";
+          setCaseMsg("Campo limpo (não apaga o que está salvo).", "warn");
+        });
+      }
+
+      function loadCaseNotesAll(){
+        try{
+          const raw = localStorage.getItem(STORAGE_CASE_NOTES);
+          if(!raw) return {};
+          const obj = JSON.parse(raw);
+          if(!obj || typeof obj !== "object") return {};
+          return obj;
+        }catch(e){
+          return {};
+        }
+      }
+
+      function setCaseMsg(text, type){
+        const el = $("#caseMsg");
+        el.textContent = text;
+
+        if(type === "ok"){
+          el.style.color = getComputedStyle(document.documentElement).getPropertyValue("--ok-tx").trim();
+        }else if(type === "warn"){
+          el.style.color = getComputedStyle(document.documentElement).getPropertyValue("--warn-tx").trim();
+        }else{
+          el.style.color = getComputedStyle(document.documentElement).getPropertyValue("--muted").trim();
+        }
+      }
+
+      function renderCase(caseId){
+        const c = cases.find(x => x.id === caseId) || cases[0];
+        const ul = $("#caseChecklist");
+        ul.innerHTML = "";
+
+        c.checklist.forEach(item => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <input type="checkbox" aria-label="Checklist do caso" />
+            <div>${escapeHtml(item)}</div>
+          `;
+          ul.appendChild(li);
+        });
+
+        setCaseMsg("Caso carregado. Marque o checklist e registre evidência.", "warn");
+      }
+
+      function buildWhatsText(name, email, msg){
+        const parts = [];
+        parts.push("Contato - AGI Estratégico (Igarapé Digital)");
+        if(name) parts.push("Nome: " + name);
+        if(email) parts.push("E-mail: " + email);
+        parts.push("Mensagem: " + (msg || ""));
+        return parts.join("\n");
+      }
+
+      function setupWhatsApp(){
+        const status = $("#wStatus");
+
+        $("#whatsBtn").addEventListener("click", () => {
+          const name = ($("#wName").value || "").trim();
+          const email = ($("#wEmail").value || "").trim();
+          const msg = ($("#wMsg").value || "").trim();
+
+          if(!msg){
+            status.textContent = "Escreva uma mensagem antes de enviar.";
+            status.style.color = getComputedStyle(document.documentElement).getPropertyValue("--warn-tx").trim();
+            return;
+          }
+
+          const text = buildWhatsText(name, email, msg);
+          const url = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+          window.open(url, "_blank", "noopener,noreferrer");
+
+          status.textContent = "WhatsApp aberto com a mensagem preenchida.";
+          status.style.color = getComputedStyle(document.documentElement).getPropertyValue("--ok-tx").trim();
+        });
+
+        $("#copyBtn").addEventListener("click", async () => {
+          const name = ($("#wName").value || "").trim();
+          const email = ($("#wEmail").value || "").trim();
+          const msg = ($("#wMsg").value || "").trim();
+
+          if(!msg){
+            status.textContent = "Escreva uma mensagem antes de copiar.";
+            status.style.color = getComputedStyle(document.documentElement).getPropertyValue("--warn-tx").trim();
+            return;
+          }
+
+          const text = buildWhatsText(name, email, msg);
+
+          try{
+            await navigator.clipboard.writeText(text);
+            status.textContent = "Mensagem copiada para a área de transferência.";
+            status.style.color = getComputedStyle(document.documentElement).getPropertyValue("--ok-tx").trim();
+          }catch(e){
+            status.textContent = "Não foi possível copiar automaticamente. Selecione o texto e copie manualmente.";
+            status.style.color = getComputedStyle(document.documentElement).getPropertyValue("--warn-tx").trim();
+          }
+        });
+      }
+
+      function init(){
+        setupPills();
+        setupFilters();
+        setupExportImport();
+        setupCases();
+        setupWhatsApp();
+
+        $("#q").value = "";
+        $("#f").value = "todas";
+        state.query = "";
+        state.filtro = "todas";
+        state.diff = "todas";
+
+        renderMissions();
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>
